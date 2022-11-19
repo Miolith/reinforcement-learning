@@ -1,0 +1,4 @@
+Vicel--farah, Nelson, nelson.vicel-farah@epita.fr, 22456
+Kaspar, Karen, karen.kaspar@epita.fr, 22753
+Brand, Romain, romain1.brand@epita.fr, 23662
+Zellmeyer, Antoine, antoine.zellmeyer@epita.fr, 23447
