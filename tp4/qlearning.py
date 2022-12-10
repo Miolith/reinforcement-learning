@@ -47,7 +47,7 @@ class QLearningAgent:
         V(s) = max_a Q(s, a) over possible actions.
         """
         # TODO: compute V(s)
-        return 0.0
+        return max(self._qvalues[state].values()) if self._qvalues[state] else 0
 
     def update(self, state: State, action: Action, reward: float, next_state: State):
         """
@@ -57,7 +57,12 @@ class QLearningAgent:
            Q_new(s, a) := Q_old(s, a) + learning_rate * TD_error(s', a)
         """
         # TODO: compute the Q-value update
-        q_value = 0.0
+        TD_target = reward + self.gamma * self.get_value(next_state)
+        Q_old = self.get_qvalue(state, action)
+        TD_error = TD_target - Q_old
+        Q_new = Q_old + self.learning_rate * TD_error
+        
+        q_value = Q_new
 
         self.set_qvalue(state, action, q_value)
 
@@ -76,14 +81,16 @@ class QLearningAgent:
         """
         Compute the action to take in the current state, including exploration.
 
-        Exploration is done with epsilon-greey. Namely, with probability self.epsilon, we should take a random action, and otherwise the best policy action (self.get_best_action).
+        Exploration is done with epsilon-greey. Namely, with probability self.epsilon, we should take a random action,
+        and otherwise the best policy action (self.get_best_action).
 
         Note: To pick randomly from a list, use random.choice(list).
               To pick True or False with a given probablity, generate uniform number in [0, 1]
               and compare it with your probability
         """
         # TODO add epsilon-greedy exploration
-        is_greedy = False
+
+        is_greedy = random.choices([0, 1], weights=[1-self.epsilon, self.epsilon], k=1)[0]
 
         return (
             random.choice(self.legal_actions)
