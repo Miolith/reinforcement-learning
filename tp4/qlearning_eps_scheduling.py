@@ -14,7 +14,9 @@ class QLearningAgentEpsScheduling(QLearningAgent):
               and compare it with your probability
         """
         # TODO add epsilon-greedy exploration with a scheduling to reduce epsilon
-        is_greedy = False
+        is_greedy = random.choices([0, 1], weights=[1-self.epsilon, self.epsilon], k=1)[0]
+
+        self.epsilon *= 0.99
 
         return (
             random.choice(self.legal_actions)
